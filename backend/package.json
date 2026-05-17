@@ -1,0 +1,14 @@
+{
+  "name": "tetriselite-backend",
+  "version": "1.0.0",
+  "description": "Backend local para Tetris Elite con SQLite y API de high score.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.4",
+    "socket.io": "^4.8.3",
+    "sqlite3": "^5.1.6"
+  }
+}

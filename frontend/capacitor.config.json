@@ -1,0 +1,6 @@
+{
+  "appId": "com.bscu.tetriselite",
+  "appName": "Tetris Elite",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}

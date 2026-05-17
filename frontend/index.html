@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris Elite - Pro Experience</title>
+    <meta name="description" content="A premium Tetris experience with neon aesthetics and smooth gameplay.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- Background Animation -->
+        <div class="bg-glow"></div>
+
+        <!-- Main Menu -->
+        <div id="menu-screen" class="screen active">
+            <div class="glass-panel">
+                <h1 class="title">TETRIS<span>ELITE</span></h1>
+                <div class="menu-options">
+                    <button id="start-btn" class="btn-primary">JUGAR SOLO</button>
+                    <button id="battle-btn" class="btn-primary battle">BATALLA EN LÍNEA</button>
+                    <button id="highscores-btn" class="btn-secondary">PUNTAJES</button>
+                    <button id="settings-btn" class="btn-secondary">AJUSTES</button>
+                    <button id="exit-btn" class="btn-secondary">SALIR</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- High Scores Screen -->
+        <div id="highscores-screen" class="screen">
+            <div class="glass-panel">
+                <h1 class="title">PUNTAJES</h1>
+                <div class="highscores-content">
+                    <div class="glass-card score">
+                        <h3>MEJOR PUNTAJE</h3>
+                        <p id="highscores-max-score">000000</p>
+                    </div>
+                    <div class="highscores-stats">
+                        <p>¡Sigue jugando para superar tu récord!</p>
+                    </div>
+                    <button id="back-to-menu-from-highscores-btn" class="btn-secondary">VOLVER</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Screen (Single & Battle) -->
+        <div id="game-screen" class="screen">
+            <div class="game-layout">
+                <div class="game-header">
+                    <div class="header-controls">
+                        <button id="ingame-menu-btn" class="btn-menu" aria-label="Menu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                        <button id="mute-btn" class="btn-menu" aria-label="Mute">
+                            <span id="mute-icon">🔊</span>
+                        </button>
+                    </div>
+                    <div class="header-scores">
+                        <div class="glass-card mini score">
+                            <h3>RECORD</h3>
+                            <p id="high-score">000000</p>
+                        </div>
+                        <div class="glass-card mini score">
+                            <h3>PUNTAJE</h3>
+                            <p id="score">000000</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-container">
+                    <!-- Opponent Side (Solo visible en Batalla) -->
+                    <div id="opponent-side" class="opponent-side hidden">
+                        <div class="board-wrapper opponent">
+                            <canvas id="opponent-board"></canvas>
+                            <div class="opponent-name">OPONENTE</div>
+                        </div>
+                        <div class="glass-card mini opponent-score-card">
+                            <h3>RIVAL</h3>
+                            <p id="opponent-score">0</p>
+                        </div>
+                    </div>
+
+
+                    <div class="board-wrapper">
+                        <canvas id="game-board"></canvas>
+                    </div>
+
+                    <div class="stats-panel right">
+                        <div class="glass-card">
+                            <h3>SIGUIENTE</h3>
+                            <canvas id="next-piece"></canvas>
+                        </div>
+                        <div class="glass-card">
+                            <h3>GUARDADO</h3>
+                            <canvas id="hold-piece"></canvas>
+                        </div>
+                        <div class="glass-card">
+                            <h3>NIVEL</h3>
+                            <p id="level">1</p>
+                        </div>
+                        <div class="glass-card">
+                            <h3>LÍNEAS</h3>
+                            <p id="lines">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pause Overlay -->
+            <div id="pause-overlay" class="overlay hidden">
+                <div class="glass-panel mini">
+                    <h2>PAUSADO</h2>
+                    <button id="resume-btn" class="btn-primary">REANUDAR</button>
+                    <button id="pause-to-menu-btn" class="btn-secondary">MENÚ PRINCIPAL</button>
+                </div>
+            </div>
+
+            <!-- Matchmaking Overlay -->
+            <div id="matchmaking-overlay" class="overlay hidden">
+                <div class="glass-panel mini">
+                    <h2 id="matchmaking-status">BUSCANDO OPONENTE...</h2>
+                    <div class="loader"></div>
+                    <button id="cancel-battle-btn" class="btn-secondary">CANCELAR</button>
+                </div>
+            </div>
+
+            <!-- Game Over Overlay -->
+            <div id="game-over-overlay" class="overlay hidden">
+                <div class="glass-panel">
+                    <h1 id="game-over-title" class="game-over-title">FIN DEL JUEGO</h1>
+                    <h2 id="game-over-subtitle" class="game-over-subtitle hidden"></h2>
+                    <div class="final-stats">
+                        <p>Puntaje Final: <span id="final-score">0</span></p>
+                    </div>
+                    <button id="restart-btn" class="btn-primary">REINTENTAR</button>
+                    <button id="back-to-menu-btn" class="btn-secondary">MENÚ PRINCIPAL</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>

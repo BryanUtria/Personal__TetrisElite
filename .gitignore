@@ -1,0 +1,36 @@
+# Dependencias
+**/node_modules/
+**/package-lock.json
+**/yarn.lock
+**/www
+**/android
+**/ios
+
+# Variables de entorno
+**/.env
+**/.env.local
+**/.*.local
+
+# Logs
+**/logs/
+**/*.log
+**/*pm-debug.log*
+
+# Archivos de sistema
+**/.DS_Store
+**/Thumbs.db
+
+# Directorios de build
+**/dist/
+**/build/
+out/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Tests
+coverage/
+.nyc_output/
