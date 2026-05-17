@@ -133,12 +133,16 @@ class App {
         // Re-usar lógica de touch para el tablero de batalla
         const setupBoardTouch = (boardId) => {
             const board = document.getElementById(boardId);
+            if (!board) return;
+
             let touchStartX = 0;
             let touchStartY = 0;
+            let lastTouchX = 0;
+            let lastTouchY = 0;
             let startTime = 0;
             let isLongPress = false;
             let longPressTimer = null;
-            let hasDroppedInThisTouch = false;
+            let touchAxisLocked = null; // 'horizontal' o 'vertical'
 
             board.addEventListener('touchstart', (e) => {
                 if (this.engine.gameOver || this.engine.paused) return;
@@ -146,9 +150,12 @@ class App {
                 const touch = e.touches[0];
                 touchStartX = touch.clientX;
                 touchStartY = touch.clientY;
+                lastTouchX = touch.clientX;
+                lastTouchY = touch.clientY;
                 startTime = Date.now();
                 isLongPress = false;
-                hasDroppedInThisTouch = false;
+                touchAxisLocked = null;
+                
                 longPressTimer = setTimeout(() => {
                     this.engine.hold();
                     isLongPress = true;
@@ -163,15 +170,36 @@ class App {
                 const rect = board.getBoundingClientRect();
                 const distX = Math.abs(touch.clientX - touchStartX);
                 const distY = touch.clientY - touchStartY;
-                if (distX > 20 || distY > 20) clearTimeout(longPressTimer);
                 const colWidth = rect.width / 10;
-                const targetCol = Math.floor((touch.clientX - rect.left) / colWidth);
-                const currentX = this.engine.currentPiece.pos.x;
-                if (targetCol > currentX) this.engine.move(1);
-                else if (targetCol < currentX) this.engine.move(-1);
-                if (distY > 50 && !hasDroppedInThisTouch) {
-                    this.engine.drop();
-                    hasDroppedInThisTouch = true;
+                const rowHeight = rect.height / 20;
+                
+                if (distX > 15 || Math.abs(distY) > 15) clearTimeout(longPressTimer);
+
+                // Bloqueo Inteligente de Eje
+                if (!touchAxisLocked) {
+                    if (distY > 20 && distY > distX * 1.5) {
+                        touchAxisLocked = 'vertical';
+                    } else if (distX > 20 && distX > Math.abs(distY) * 1.5) {
+                        touchAxisLocked = 'horizontal';
+                    }
+                }
+
+                // Movimiento Horizontal Relativo
+                if (touchAxisLocked !== 'vertical') {
+                    const deltaX = touch.clientX - lastTouchX;
+                    if (Math.abs(deltaX) > colWidth * 0.9) {
+                        this.engine.move(deltaX > 0 ? 1 : -1);
+                        lastTouchX = touch.clientX;
+                    }
+                }
+
+                // Caída Suave Continua
+                if (touchAxisLocked !== 'horizontal') {
+                    const deltaY = touch.clientY - lastTouchY;
+                    if (deltaY > rowHeight * 1.5) {
+                        this.engine.drop();
+                        lastTouchY = touch.clientY;
+                    }
                 }
             }, { passive: false });
 
@@ -180,11 +208,15 @@ class App {
                 if (this.engine.gameOver || this.engine.paused) return;
                 const duration = Date.now() - startTime;
                 const distX = Math.abs(e.changedTouches[0].clientX - touchStartX);
-                const distY = Math.abs(e.changedTouches[0].clientY - touchStartY);
-                if (duration < 250 && distX < 20 && distY < 20 && !isLongPress) {
+                const distY = e.changedTouches[0].clientY - touchStartY;
+                
+                // Rotar (Tap rápido y sin moverse)
+                if (duration < 250 && distX < 15 && Math.abs(distY) < 15 && !isLongPress) {
                     this.engine.rotate();
                 }
-                if (distY > 150 && duration < 300) {
+                
+                // Caída Rápida (Swipe largo hacia abajo)
+                if (distY > 80 && duration < 400 && touchAxisLocked !== 'horizontal') {
                     this.engine.hardDrop();
                 }
             }, { passive: false });
