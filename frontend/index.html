@@ -22,15 +22,80 @@
         <div id="menu-screen" class="screen active">
             <div class="glass-panel">
                 <h1 class="title">TETRIS<span>ELITE</span></h1>
-                <div class="menu-options">
-                    <button id="start-btn" class="btn-primary">JUGAR SOLO</button>
-                    <button id="battle-btn" class="btn-primary battle">BATALLA EN LÍNEA</button>
-                    <button id="highscores-btn" class="btn-secondary">PUNTAJES</button>
-                    <button id="settings-btn" class="btn-secondary">AJUSTES</button>
-                    <button id="exit-btn" class="btn-secondary">SALIR</button>
+                <div class="wheel-container" id="mode-wheel">
+                    <div class="wheel-item disabled" data-action="story">
+                        <div class="wheel-icon">📖</div>
+                        <div class="wheel-text">
+                            <h3>MODO HISTORIA</h3>
+                            <p>Aventura Principal (Pronto)</p>
+                        </div>
+                    </div>
+                    <div class="wheel-item active" data-action="start">
+                        <div class="wheel-icon">🕹️</div>
+                        <div class="wheel-text">
+                            <h3>CLÁSICO</h3>
+                            <p>Supervivencia sin fin</p>
+                        </div>
+                    </div>
+                    <div class="wheel-item" data-action="battle">
+                        <div class="wheel-icon">⚔️</div>
+                        <div class="wheel-text">
+                            <h3>BATALLA 1v1</h3>
+                            <p>En Línea Competitivo</p>
+                        </div>
+                    </div>
+                    <div class="wheel-item disabled" data-action="team_battle">
+                        <div class="wheel-icon">🤝</div>
+                        <div class="wheel-text">
+                            <h3>BATALLA 2v2</h3>
+                            <p>Cooperativo (Próximamente)</p>
+                        </div>
+                    </div>
+                    <div class="wheel-item disabled" data-action="garbage_clear">
+                        <div class="wheel-icon">🧹</div>
+                        <div class="wheel-text">
+                            <h3>ELIMINA BASURA</h3>
+                            <p>Rompecabezas Táctico</p>
+                        </div>
+                    </div>
+                    <div class="wheel-item disabled" data-action="sprint">
+                        <div class="wheel-icon">⏱️</div>
+                        <div class="wheel-text">
+                            <h3>SPRINT 40 LÍNEAS</h3>
+                            <p>Modo Contrarreloj</p>
+                        </div>
+                    </div>
+                    <div class="wheel-item disabled" data-action="inverted">
+                        <div class="wheel-icon">🔃</div>
+                        <div class="wheel-text">
+                            <h3>GRAVEDAD CERO</h3>
+                            <p>Piezas suben en vez de bajar</p>
+                        </div>
+                    </div>
                 </div>
+                <button id="play-selected-btn" class="btn-primary">JUGAR</button>
             </div>
         </div>
+
+        <!-- Bottom Navigation Bar -->
+        <nav id="bottom-nav" class="bottom-nav">
+            <button class="nav-tab active" data-target="menu-screen">
+                <span class="icon">🎮</span>
+                <span>Modos</span>
+            </button>
+            <button class="nav-tab" data-target="highscores-screen">
+                <span class="icon">🏆</span>
+                <span>Récords</span>
+            </button>
+            <button class="nav-tab" data-target="settings-screen">
+                <span class="icon">⚙️</span>
+                <span>Ajustes</span>
+            </button>
+            <button class="nav-tab" data-action="exit">
+                <span class="icon">🚪</span>
+                <span>Salir</span>
+            </button>
+        </nav>
 
         <!-- High Scores Screen -->
         <div id="highscores-screen" class="screen">
@@ -44,7 +109,6 @@
                     <div class="highscores-stats">
                         <p>¡Sigue jugando para superar tu récord!</p>
                     </div>
-                    <button id="back-to-menu-from-highscores-btn" class="btn-secondary">VOLVER</button>
                 </div>
             </div>
         </div>

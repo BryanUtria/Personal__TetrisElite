@@ -50,6 +50,7 @@ npx cap open android
 1.  Una vez abierto Android Studio, espera a que termine de cargar (Gradle Sync).
 2.  Ve al menú superior: **Build > Build Bundle(s) / APK(s) > Build APK(s)**.
 3.  Cuando termine, aparecerá un aviso abajo a la derecha: **"APK(s) generated successfully"**. Haz clic en **locate** para encontrar tu archivo `app-debug.apk`. ¡Ese es el archivo que puedes instalar en tu celular!
+4.  El archivo `app-debug.apk` se encuentra en la carpeta: `frontend\android\app\build\outputs\apk\debug`.
 
 ---
 
