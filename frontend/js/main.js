@@ -84,16 +84,19 @@ class App {
                 const diff = index - activeIndex;
                 item.classList.toggle('active', diff === 0);
 
-                // Efecto 3D de Rueda Vertical (Ajustado para más elementos)
-                const translateY = diff * 45;
-                const scale = Math.max(0.4, 1 - Math.abs(diff) * 0.12);
-                const rotateX = diff * -15;
+                // Efecto 3D de Rueda Vertical (Ajustado para aún más elementos)
+                const translateY = diff * 45; // Más juntos para que quepan más en pantalla
+                const scale = Math.max(0.3, 1 - Math.abs(diff) * 0.1); // Se encogen más lento
+                const rotateX = diff * -12; // Menos inclinación para apilar más profundo
 
                 let opacity = 0;
-                if (diff === 0) opacity = 1;
-                else if (Math.abs(diff) === 1) opacity = 0.6;
-                else if (Math.abs(diff) === 2) opacity = 0.3;
-                else if (Math.abs(diff) === 3) opacity = 0.1;
+                const absDiff = Math.abs(diff);
+                if (absDiff === 0) opacity = 1;
+                else if (absDiff === 1) opacity = 0.7;
+                else if (absDiff === 2) opacity = 0.5;
+                else if (absDiff === 3) opacity = 0.3;
+                else if (absDiff === 4) opacity = 0.15;
+                else if (absDiff === 5) opacity = 0.05;
 
                 // @ts-ignore
                 item.style.transform = `translateY(${translateY}px) translateZ(${Math.abs(diff) * -40}px) rotateX(${rotateX}deg) scale(${scale})`;
@@ -137,6 +140,7 @@ class App {
                 if (action === 'start') this.start();
                 else if (action === 'battle') this.initBattle();
                 else if (action === 'story') alert('Modo Historia estará disponible en la próxima actualización.');
+                else if (action === 'vs_ai') alert('VS MÁQUINA: Prepárate para enfrentar a la Inteligencia Artificial. ¡Pronto!');
                 else if (action === 'team_battle') alert('¡La Batalla 2v2 llegará pronto! Busca a un amigo.');
                 else if (action === 'garbage_clear') alert('Modo "Elimina Basura" en desarrollo. ¡Prepárate para pensar!');
                 else if (action === 'sprint') alert('Sprint 40 Líneas: Afina tus dedos, próximamente.');

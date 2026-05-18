@@ -34,8 +34,8 @@ Capacitor no permite usar el directorio raíz (`.`) como carpeta web de forma se
 1.  **Copia tus archivos a `www`:**
     ```powershell
     # Dentro de la carpeta /frontend
-    cp index.html, style.css www/
-    cp -r js www/
+    cp -Force index.html, style.css www/
+    cp -Force -Recurse js\* www\js\
     ```
 2.  **Corrige el archivo `capacitor.config.json`:**
     Asegúrate de que diga: `"webDir": "www"`.
